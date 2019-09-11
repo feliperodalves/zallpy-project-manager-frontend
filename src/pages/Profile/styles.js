@@ -11,7 +11,7 @@ export const Container = styled.div`
     margin-top: 30px;
 
     input {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.5);
       border: 0;
       border-radius: 4px;
       height: 44px;
@@ -43,8 +43,7 @@ export const Container = styled.div`
       padding: 0 20px;
       height: 44px;
       align-self: flex-end;
-      background: #f94d6a;
-      font-weight: bold;
+      background: #008f1f;
       color: #fff;
       border: 0;
       border-radius: 4px;
@@ -60,7 +59,7 @@ export const Container = styled.div`
       }
 
       &:hover {
-        background: ${darken(0.05, '#F94D6A')};
+        background: ${darken(0.05, '#008f1f')};
       }
     }
   }

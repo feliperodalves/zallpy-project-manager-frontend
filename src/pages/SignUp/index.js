@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
 import { signUpRequest } from '~/store/modules/auth/actions';
 
-import logo from '~/assets/logo.svg';
+import { Form, Input, Image } from '~/components/DefaultStyle';
+import logo from '~/assets/logo.png';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Seu nome é obrigatório'),
@@ -30,7 +30,7 @@ export default function SignUp() {
 
   return (
     <>
-      <img src={logo} alt="GoBarber" />
+      <Image src={logo} alt="GoBarber" />
       <Form onSubmit={handleSubmit} schema={schema}>
         <Input name="name" type="text" placeholder="Seu Nome" />
         <Input name="email" type="text" placeholder="Seu email" />

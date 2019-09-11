@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
-import logo from '~/assets/logo.svg';
+import { Form, Input, Image } from '~/components/DefaultStyle';
+import logo from '~/assets/logo.png';
+import spinner from '~/assets/loading.svg';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -25,7 +26,7 @@ export default function SignIn() {
 
   return (
     <>
-      <img src={logo} alt="GoBarber" />
+      <Image src={logo} alt="Logo" />
       <Form onSubmit={handleSubmit} schema={schema}>
         <Input
           name="email"
@@ -34,7 +35,16 @@ export default function SignIn() {
           autoComplete="off"
         />
         <Input name="password" type="password" placeholder="Sua senha" />
-        <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
+        <button type="submit">
+          {loading ? (
+            <>
+              <img src={spinner} alt="loader" />
+              Carregando...
+            </>
+          ) : (
+            'Acessar'
+          )}
+        </button>
         <Link to="/register">Não tenho uma conta</Link>
       </Form>
     </>
