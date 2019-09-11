@@ -7,7 +7,7 @@ import { MdAddCircle, MdChevronRight } from 'react-icons/md';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { Container, List } from './styles';
+import { Container, List, Header } from './styles';
 
 export default function Dashboard() {
   const [meetups, setMeetups] = useState([]);
@@ -37,26 +37,13 @@ export default function Dashboard() {
 
   return (
     <Container>
-      <div>
-        <h1>Meus meetups</h1>
-        <button type="button" onClick={() => history.push('/meetup/new')}>
+      <Header>
+        <h1>oi</h1>
+        <button type="button" onClick={() => history.push('/project/new')}>
           <MdAddCircle size={20} color="#fff" />
-          Novo Meetup
+          Novo Projeto
         </button>
-      </div>
-      <List>
-        {meetups.map(meetup => (
-          <li key={meetup.id}>
-            <strong>{meetup.title}</strong>
-            <div>
-              <p>{meetup.dateFormatted}</p>
-              <Link to={`meetup/details/${meetup.id}`}>
-                <MdChevronRight size={25} color="#fff" />
-              </Link>
-            </div>
-          </li>
-        ))}
-      </List>
+      </Header>
     </Container>
   );
 }
