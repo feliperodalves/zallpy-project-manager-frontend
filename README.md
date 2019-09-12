@@ -32,3 +32,20 @@ Desenvolver uma aplicação web que gerencie alocação de profissionais em proj
 - Executar 'yarn start'.
 
 > Estes procedimentos podem ser executados pelo docker-compose no arquivo docker-compose.yml encontrado no repositório
+> Por algum motivo, o docker-compose não está funcionando no windows...
+
+### Todo
+
+- Padronizar somente em um tipo de estilização (Material-ui)
+- Implementar o Redux para os demais dados (projetos, tarefas)
+
+### Telas
+
+- As telas podem ser conferidas [(Aqui)](./showoff/)
+
+### Acesso
+
+- administrador@zallpy.com - 1805felipe
+- programador1@zallpy.com - 1805felipe
+- programador2@zallpy.com - 1805felipe
+> Como os dados estão gravados em Seeds (sequelize) será necessário estes dados iniciais
