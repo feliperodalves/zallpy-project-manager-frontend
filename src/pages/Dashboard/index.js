@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { MdAddCircle } from 'react-icons/md';
+import { MdAddCircle, MdTimer } from 'react-icons/md';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -57,10 +57,16 @@ export default function Dashboard() {
     <Container>
       <header>
         <h1>Dashboard de Projetos</h1>
-        <button type="button" onClick={() => history.push('/project/new')}>
-          <MdAddCircle size={20} color="#fff" />
-          Novo Projeto
-        </button>
+        <div>
+          <button type="button" onClick={() => history.push('/project/new')}>
+            <MdAddCircle size={20} color="#fff" />
+            Novo Projeto
+          </button>
+          <button type="button" onClick={() => history.push('/task')}>
+            <MdTimer size={20} color="#fff" />
+            Lista de Tarefas
+          </button>
+        </div>
       </header>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
@@ -77,13 +83,23 @@ export default function Dashboard() {
                       {project.name}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
-                      {project.users} usuário(s) designado(s) ao projeto
-                    </Typography>
-                    <Typography className={classes.pos} color="textSecondary">
                       {project.workedTime ? (
                         <>
                           Horas registradas:
-                          <strong>{project.workedTime}</strong>
+                          <br />
+                          <strong>
+                            {project.workedTime.hours
+                              ? `0${project.workedTime.hours}`.slice(-2)
+                              : '00'}
+                            :
+                            {project.workedTime.minutes
+                              ? `0${project.workedTime.minutes}`.slice(-2)
+                              : '00'}
+                            :
+                            {project.workedTime.seconds
+                              ? `0${project.workedTime.seconds}`.slice(-2)
+                              : '00'}
+                          </strong>
                         </>
                       ) : (
                         <>Não foram registradas nenhuma atividade no projeto</>

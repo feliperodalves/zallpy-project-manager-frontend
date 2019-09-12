@@ -2,8 +2,81 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 1600px;
+  max-width: 940px;
   margin: 0 auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+
+    .react-datepicker__input-container {
+      width: 100%;
+    }
+    input,
+    textarea {
+      background: rgba(0, 0, 0, 0.5);
+      border: 0;
+      border-radius: 4px;
+      height: 44px;
+      padding: 0 15px;
+      color: #fff;
+      margin: 0 0 10px;
+      width: 100%;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    textarea {
+      height: 200px;
+      resize: none;
+      padding: 15px;
+    }
+
+    span {
+      color: #fb6f91;
+      align-self: flex-start;
+      margin: 0 0 10px;
+      font-weight: bold;
+    }
+
+    > button {
+      margin: 5px 0 0 15px;
+      padding: 0 20px;
+      height: 44px;
+      align-self: flex-end;
+      background: #008f1f;
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: background 0.2s;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        margin-right: 10px;
+      }
+
+      background: #008f1f;
+
+      &:hover {
+        background: ${darken(0.05, '#008f1f')};
+      }
+
+      &.back {
+        background: #2d5ff5;
+
+        &:hover {
+          background: ${darken(0.05, '#2d5ff5')};
+        }
+      }
+    }
+  }
 `;
 
 export const Header = styled.div`

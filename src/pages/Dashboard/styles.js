@@ -34,6 +34,11 @@ export const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   h1 {
@@ -53,6 +58,7 @@ export const Container = styled.div`
     font-size: 16px;
     transition: background 0.2s;
 
+    margin-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
