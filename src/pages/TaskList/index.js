@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { parseISO, format, isValid } from 'date-fns';
+import { parseISO, format } from 'date-fns';
 import MaterialTable from 'material-table';
 import { toast } from 'react-toastify';
 import { MdTimer } from 'react-icons/md';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 
 import { Loading, Container } from './styles';
 import { Form, Input } from '~/components/DefaultStyle';
 import SelectInput from './SelectInput';
 import DatePickerInput from './DatePickerInput';
 
-import history from '~/services/history';
 import api from '~/services/api';
 
 const columns = [
@@ -92,7 +92,7 @@ export default function TaskList() {
         </Form>
       )}
 
-      {tasks.length > 0 && (
+      {tasks.length > 0 ? (
         <MaterialTable
           title="Lista de Tarefas"
           columns={columns}
@@ -128,6 +128,11 @@ export default function TaskList() {
               }),
           }}
         />
+      ) : (
+        <Loading>
+          Nenhuma tarefa encontrada, crie um novo registro ou
+          <Link to="/dashboard">Clique aqui para voltar</Link>
+        </Loading>
       )}
     </Container>
   );
