@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { lighten } from 'polished';
 import {
   Form as FormR,
   Input as InputR,
@@ -11,31 +10,6 @@ export const CardContainer = styled.div`
   border-radius: 4px;
   border: 1px solid rgba(0, 40, 100, 0.12);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-`;
-
-export const Button = styled.button`
-  display: flex;
-  font-family: 'Roboto Medium', 'Roboto';
-  font-weight: 500;
-  font-style: normal;
-  align-items: center;
-  height: 32px;
-  padding: 0 7px;
-  color: #fff;
-  border-radius: 2px;
-  font-size: 14px;
-  text-transform: uppercase;
-  border: none;
-  box-shadow: 0px 0px 2px rgba(40, 40, 40, 0.4);
-  transition: background-color 0.2s ease;
-  user-select: none;
-  background-color: ${props =>
-    props.background ? props.background : 'rgb(69, 122, 183)'};
-
-  &:hover {
-    background-color: ${props =>
-      lighten('0.05', props.background || 'rgb(69, 122, 183)')};
-  }
 `;
 
 export const Input = styled(InputR)`
@@ -84,15 +58,14 @@ export const Image = styled.img`
 `;
 
 export const Select = styled(SelectR)`
-  margin-left: 15px;
-
   background: rgba(0, 0, 0, 0.3);
   border: 0;
   border-radius: 4px;
   height: 44px;
   padding: 0 15px;
   color: #fff;
-  margin-left: 15px;
+
+  margin-bottom: 10px;
 
   option {
     color: #333;

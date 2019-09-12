@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdSave } from 'react-icons/md';
+import { MdSave, MdKeyboardBackspace } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -50,7 +50,11 @@ export default function ProjectEditor({ match }) {
         history.push(`/dashboard`);
       }
     } catch (err) {
-      toast.error('Ocorreu um erro ao tentar criar o projeto');
+      if (err.response.data) {
+        toast.error(err.response.data.error);
+      } else {
+        toast.error('Ocorreu um erro inesperado');
+      }
     }
   }
 
@@ -66,10 +70,20 @@ export default function ProjectEditor({ match }) {
       <Form schema={schema} initialData={project} onSubmit={handleSubmit}>
         <Input name="name" placeholder="Nome do Projeto" />
         <Input name="description" placeholder="Descrição completa" multiline />
-        <button type="submit">
-          <MdSave size={24} color="#fff" />
-          {projectId ? 'Atualizar Projeto' : 'Criar Projeto'}
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={() => history.goBack()}
+            className="back"
+          >
+            <MdKeyboardBackspace size={24} color="#fff" />
+            Voltar
+          </button>
+          <button type="submit">
+            <MdSave size={24} color="#fff" />
+            {projectId ? 'Atualizar Projeto' : 'Criar Projeto'}
+          </button>
+        </div>
       </Form>
     </Container>
   );

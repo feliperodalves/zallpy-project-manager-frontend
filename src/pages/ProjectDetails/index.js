@@ -1,14 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { MdEdit, MdDeleteForever, MdPersonAdd } from 'react-icons/md';
+import { MdEdit, MdDeleteForever, MdPersonAdd, MdTimer } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { addSeconds, format } from 'date-fns';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
 import history from '~/services/history';
 import api from '~/services/api';
 
 import SelectInput from './SelectInput';
-import { Loading, Container, Details } from './styles';
+import { Loading, Container, Details, AddInformationForm } from './styles';
 import { Form } from '~/components/DefaultStyle';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(2),
+    overflowX: 'auto',
+    marginBottom: '20px',
+  },
+  table: {
+    minWidth: 450,
+  },
+}));
 
 export default function ProjectDetails({ match }) {
   const [project, setProject] = useState([]);
@@ -18,11 +41,41 @@ export default function ProjectDetails({ match }) {
   const [roles, setRoles] = useState([]);
   const [users, setUsers] = useState([]);
 
+  const profile = useSelector(state => state.user.profile);
+  const classes = useStyles();
+
+  function timeToSeconds(time) {
+    const [hour, minute, second] = time.split(':').map(n => parseInt(n, 10));
+    return second + minute * 60 + hour * 3600;
+  }
+
   useEffect(() => {
     async function loadProject() {
       try {
         const response = await api.get(`/projects/${match.params.projectId}`);
-        setProject(response.data);
+
+        const data = {
+          ...response.data,
+          Assignments: response.data.Assignments.map(a => {
+            a.totalHours = format(
+              addSeconds(
+                new Date(0, 0, 0, 0, 0, 0),
+                a.Tasks.reduce((acc, cur) => {
+                  return acc + timeToSeconds(cur.time);
+                }, 0) - 60
+              ),
+              'HH:mm:ss'
+            );
+            return a;
+          }),
+        };
+
+        const admin =
+          response.data.Assignments.filter(
+            a => a.users.id === profile.id && a.roles.id === 1
+          ).length > 0;
+
+        setProject({ ...data, admin });
         setLoading(false);
       } catch (err) {
         toast.error('Erro ao acessar os detalhes do Projeto');
@@ -31,7 +84,7 @@ export default function ProjectDetails({ match }) {
       }
     }
     loadProject();
-  }, [match.params.projectId, refresh]);
+  }, [match.params.projectId, profile.id, refresh]);
 
   async function loadSelectors() {
     const responseUsers = await api.get('/users');
@@ -102,33 +155,62 @@ export default function ProjectDetails({ match }) {
             <h4>Descrição:</h4>
             <p>{project.description}</p>
             <h4>Participantes:</h4>
-            <ul>
-              {project.Assignments.map(a => (
-                <li key={a.id}>
-                  {a.users.name} - <span>{a.roles.name}</span>
-                </li>
-              ))}
-            </ul>
 
-            <div>
-              {!assign ? (
-                <button type="button" onClick={loadSelectors}>
-                  <MdPersonAdd size={20} color="#fff" />
-                  Incluir Participante
-                </button>
-              ) : (
-                <Form onSubmit={handleAddAssignment}>
-                  <h4>Usuário:</h4>
-                  <SelectInput name="user" data={users} />
-                  <h4>Nível de Acesso:</h4>
-                  <SelectInput name="role" data={roles} />
-                  <button type="submit">
+            <Paper className={classes.root}>
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Participante</TableCell>
+                    <TableCell align="left">Nível de Acesso</TableCell>
+                    <TableCell align="right">Horas</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {project.Assignments.map(row => (
+                    <TableRow key={row.id}>
+                      <TableCell>{row.users.name}</TableCell>
+                      <TableCell align="left">{row.roles.name}</TableCell>
+                      <TableCell align="right">{row.totalHours}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
+            <AddInformationForm>
+              <div>
+                {!assign ? (
+                  <button
+                    type="button"
+                    onClick={loadSelectors}
+                    className="user"
+                  >
                     <MdPersonAdd size={20} color="#fff" />
-                    Salvar
+                    Incluir Participante
                   </button>
-                </Form>
-              )}
-            </div>
+                ) : (
+                  <Form onSubmit={handleAddAssignment}>
+                    <h4>Usuário:</h4>
+                    <SelectInput name="user" data={users} />
+                    <h4>Nível de Acesso:</h4>
+                    <SelectInput name="role" data={roles} />
+                    <button type="submit" className="user">
+                      <MdPersonAdd size={20} color="#fff" />
+                      Salvar
+                    </button>
+                  </Form>
+                )}
+              </div>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => history.push(`/task/new/${project.id}`)}
+                  className="task"
+                >
+                  <MdTimer size={20} color="#fff" />
+                  Registrar Tempo
+                </button>
+              </div>
+            </AddInformationForm>
           </Details>
         </>
       ) : (

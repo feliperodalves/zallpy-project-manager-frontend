@@ -115,54 +115,51 @@ export const Details = styled.div`
     margin-bottom: 30px;
     padding-left: 15px;
   }
+`;
 
-  ul {
-    margin-left: 30px;
-    margin-bottom: 20px;
+export const AddInformationForm = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    li {
-      span {
-        color: #777;
-        font-size: 14px;
-      }
-    }
-  }
-
-  div {
+  form {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    color: rgba(0, 0, 0, 0.7);
-
-    p {
-      margin-right: 30px;
-      font-size: 16px;
-    }
-
-    svg {
-      margin-right: 10px;
-    }
+    justify-content: center;
+    flex-direction: column;
   }
+
   button {
-    margin: 5px 0 0;
     padding: 0 20px;
+    margin-top: 5px;
     height: 44px;
-    align-self: flex-start;
     color: #fff;
     border: 0;
     border-radius: 4px;
     font-size: 16px;
-    margin-left: 15px;
     transition: background 0.2s;
 
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #008f1f;
 
-    &:hover {
-      background: ${darken(0.05, '#008f1f')};
+    &.user {
+      background: #008f1f;
+
+      &:hover {
+        background: ${darken(0.05, '#008f1f')};
+      }
     }
+
+    &.task {
+      background: #2d5ff5;
+
+      &:hover {
+        background: ${darken(0.05, '#2d5ff5')};
+      }
+    }
+
     svg {
       margin-right: 10px;
     }

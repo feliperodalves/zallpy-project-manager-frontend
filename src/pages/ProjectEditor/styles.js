@@ -55,28 +55,44 @@ export const Container = styled.div`
       font-weight: bold;
     }
 
-    > button {
-      margin: 5px 0 0;
-      padding: 0 20px;
-      height: 44px;
-      align-self: flex-end;
-      background: #008f1f;
-      color: #fff;
-      border: 0;
-      border-radius: 4px;
-      font-size: 16px;
-      transition: background 0.2s;
-
+    div {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: row;
+      justify-content: flex-end;
 
-      svg {
-        margin-right: 10px;
-      }
+      button {
+        margin: 5px 0 0 15px;
+        padding: 0 20px;
+        height: 44px;
+        align-self: flex-end;
+        background: #008f1f;
+        color: #fff;
+        border: 0;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: background 0.2s;
 
-      &:hover {
-        background: ${darken(0.05, '#008f1f')};
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          margin-right: 10px;
+        }
+
+        background: #008f1f;
+
+        &:hover {
+          background: ${darken(0.05, '#008f1f')};
+        }
+
+        &.back {
+          background: #2d5ff5;
+
+          &:hover {
+            background: ${darken(0.05, '#2d5ff5')};
+          }
+        }
       }
     }
   }
