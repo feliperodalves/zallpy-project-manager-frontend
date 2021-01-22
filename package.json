@@ -9,7 +9,7 @@
     "axios": "^0.21.1",
     "date-fns": "^2.1.0",
     "history": "^4.9.0",
-    "immer": "^3.2.1",
+    "immer": "^8.0.1",
     "material-table": "^1.50.0",
     "polished": "^3.4.1",
     "prop-types": "^15.7.2",
